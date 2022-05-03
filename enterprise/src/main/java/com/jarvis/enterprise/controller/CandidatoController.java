@@ -1,6 +1,7 @@
 package com.jarvis.enterprise.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.jarvis.enterprise.models.Candidato;
 import com.jarvis.enterprise.repository.CandidatoRepository;
@@ -24,6 +25,8 @@ public class CandidatoController {
     CandidatoController(CandidatoRepository candidatoRepository) {
     this.repository = candidatoRepository;
     }
+    
+    //=============================== CRUD =======================================
 
     @GetMapping
     public List<Candidato> findAll(){
@@ -61,4 +64,25 @@ public class CandidatoController {
               }).orElse(ResponseEntity.notFound().build());
         }
 
+    //=============================== Custom  =======================================
+
+    @GetMapping(path = {"/{id}"})
+    public Optional<Candidato> findById(@PathVariable Long id){
+      return repository.findById(id);
+    }
+
+    @GetMapping(path = {"/nome/{nome}"})
+    public List<Candidato> findByName(@PathVariable String nome){
+      return repository.findbyName(nome);
+    }
+
+    @GetMapping(path = {"/cpf/{cpf}"})
+    public List<Candidato> findByCpf(@PathVariable String cpf){
+      return repository.findbyCpf(cpf);
+    }
+
+    @GetMapping(path = {"/email/{email}"})
+    public List<Candidato> findByEmail(@PathVariable String email){
+      return repository.findbyEmail(email);
+    }
 }
